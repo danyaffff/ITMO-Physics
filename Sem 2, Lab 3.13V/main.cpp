@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     
     std::vector<double> fieldModule;
     
-    Field fieldBuffer;
+    Field field;
     
     std::vector<std::vector<Interval>> deltaZ;
     
@@ -83,10 +83,12 @@ int main(int argc, char* argv[]) {
         }
         
         while (!fin.eof()) {
-            fin >> fieldBuffer.coordinates.x >> fieldBuffer.coordinates.y >> fieldBuffer.coordinates.z >> fieldBuffer.field.x >> fieldBuffer.field.y >> fieldBuffer.field.z;
+            fin >> field.coordinates.x >> field.coordinates.y >> field.coordinates.z >> field.field.x >> field.field.y >> field.field.z;
             
-            magneticField.push_back(fieldBuffer);
+            magneticField.push_back(field);
         }
+        
+        fin.close();
         
         deltaZ.resize(magneticField.size());
         for (int i = 0; i < magneticField.size(); i++) {
@@ -193,6 +195,7 @@ int main(int argc, char* argv[]) {
                 fout << "\t" << j + 1 << "%: " << std::setprecision(8) << deltaZ[i][j].from << "..." << deltaZ[i][j].to << std::endl;
             }
         }
+        fout.close();
     } catch (std::ifstream::failure &) {
         std::cerr << "Ошибка при открытии входного файла!" << std::endl;
         return 1;
