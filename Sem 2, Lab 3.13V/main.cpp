@@ -34,11 +34,11 @@ struct Field {
     }
 };
 
-double module3D(double x, double y, double z) {
+double distance(double x, double y, double z) {
     return sqrt(pow(x, 2) + pow(y, 2) + pow(z, 2));
 }
 
-double module2D(double x, double y) {
+double distance(double x, double y) {
     return sqrt(pow(x, 2) + pow(y, 2));
 }
 
@@ -54,7 +54,6 @@ int main(int argc, char* argv[]) {
     std::vector<double> gradient;
     std::vector<double> theoreticalMagneticInduction;
     std::vector<double> experimentalMagneticInduction;
-    
     std::vector<double> fieldModule;
     
     Field field;
@@ -88,8 +87,6 @@ int main(int argc, char* argv[]) {
             magneticField.push_back(field);
         }
         
-        fin.close();
-        
         deltaZ.resize(magneticField.size());
         for (int i = 0; i < magneticField.size(); i++) {
             deltaZ[i].resize(10);
@@ -98,10 +95,10 @@ int main(int argc, char* argv[]) {
         std::sort(magneticField.begin(), magneticField.end());
         
         for (int i = 0; i < magneticField.size(); i++) {
-            fieldModule.push_back(module3D(μ * magneticField[i].field.x, μ * magneticField[i].field.y, μ * magneticField[i].field.z));  // |B|
+            fieldModule.push_back(distance(μ * magneticField[i].field.x, μ * magneticField[i].field.y, μ * magneticField[i].field.z));  // |B|
             
             if (i != magneticField.size() - 1) {
-                flatGradient.push_back(module2D(μ * magneticField[i].field.x, μ * magneticField[i].field.y) / module2D(μ * magneticField[i + 1].field.x, μ * magneticField[i].field.y));
+                flatGradient.push_back(distance(μ * magneticField[i].field.x, μ * magneticField[i].field.y) / distance(μ * magneticField[i + 1].field.x, μ * magneticField[i].field.y));
                 gradient.push_back(magneticField[i].field.z / magneticField[i + 1].field.z);  // μ сокращается
             } else {
                 flatGradient.push_back(-1);
@@ -195,7 +192,6 @@ int main(int argc, char* argv[]) {
                 fout << "\t" << j + 1 << "%: " << std::setprecision(8) << deltaZ[i][j].from << "..." << deltaZ[i][j].to << std::endl;
             }
         }
-        fout.close();
     } catch (std::ifstream::failure &) {
         std::cerr << "Ошибка при открытии входного файла!" << std::endl;
         return 1;
