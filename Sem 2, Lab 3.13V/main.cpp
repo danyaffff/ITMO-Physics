@@ -44,9 +44,9 @@ double module2D(double x, double y) {
 
 int main(int argc, char* argv[]) {
     std::ifstream fin;
-//    fin.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+    fin.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     std::ofstream fout;
-//    fout.exceptions(std::ofstream::badbit | std::ofstream::failbit);
+    fout.exceptions(std::ofstream::badbit | std::ofstream::failbit);
     
     std::vector<Field> magneticField;
     
