@@ -87,6 +87,10 @@ int main(int argc, char* argv[]) {
             magneticField.push_back(field);
         }
         
+        magneticField.pop_back();
+        
+        fin.close();
+        
         deltaZ.resize(magneticField.size());
         for (int i = 0; i < magneticField.size(); i++) {
             deltaZ[i].resize(10);
@@ -192,6 +196,7 @@ int main(int argc, char* argv[]) {
                 fout << "\t" << j + 1 << "%: " << std::setprecision(8) << deltaZ[i][j].from << "..." << deltaZ[i][j].to << std::endl;
             }
         }
+        fout.close();
     } catch (std::ifstream::failure &) {
         std::cerr << "Ошибка при открытии входного файла!" << std::endl;
         return 1;
