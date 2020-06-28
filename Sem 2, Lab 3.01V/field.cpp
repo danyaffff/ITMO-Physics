@@ -64,6 +64,10 @@ void Field::input(std::string inputFilename) {
     std::ifstream fin(inputFilename);  // Открываем файл
     fin.exceptions(std::ifstream::badbit | std::ifstream::failbit);  // Подключаем исключения файла
     
+    for (int i = 0; i < 9; i++) {
+        getline(fin, temp);
+    }
+    
     while (!fin.eof()) {  // Читаем до конца файла
         fin >> point.x >> point.y >> point.potential;  // Вводим x, y и potential
         
